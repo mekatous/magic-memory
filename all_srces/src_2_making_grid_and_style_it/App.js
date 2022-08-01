@@ -1,0 +1,52 @@
+import { useState } from 'react';
+import './App.css';
+
+const cardImages = [
+  {src: "helmet-1"},
+  {src: "potion-1"},
+  {src: "ring-1"},
+  {src: "scroll-1"},
+  {src: "shield-1"},
+  {src: "sword-1"}
+];
+
+function App() {
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+
+  //shuffle cards
+  const shuffleCards = () =>{
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(()=> Math.random() - 0.5)
+      .map((card)=> ({...card, id: Math.random() }));
+
+    setCards(shuffledCards);
+    setTurns(0);
+  }
+
+  //console.log(cards, turns);
+
+
+  return (
+    <div className="App">
+      <h1>Magic Board</h1>
+      <button onClick = {shuffleCards}>New Game</button>
+
+      <div className="card-grid">
+        {cards.map((card)=>(
+          <div className="card" key={card.id}>
+            <div>
+              <img src={`/img/${card.src}.png`} alt="card front" />
+              <img src="/img/cover.png" alt="card back" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="turns">
+        {turns}
+      </div>
+    </div>
+  );
+}
+
+export default App;
